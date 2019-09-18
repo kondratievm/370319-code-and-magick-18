@@ -16,11 +16,6 @@ var renderCloud = function (ctx, x, y, color) {
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
   ctx.strokeStyle = 'blue';
   ctx.strokeRect(100, 10, CLOUD_WIDTH, CLOUD_HEIGHT);
-  ctx.fillStyle = '#000';
-  ctx.font = '16px PT Mono';
-  ctx.textBaseline = 'hanging';
-  ctx.fillText('Ура вы победили!', 120, 40);
-  ctx.fillText('Список результатов:', 120, 60);
 };
 
 var getMaxTime = function (times) {
@@ -33,9 +28,25 @@ var getMaxTime = function (times) {
   return maxTime;
 };
 
+var renderText = function (ctx, textColor, textFont, textBaseline) {
+  ctx.fillStyle = textColor;
+  ctx.font = textFont;
+  ctx.textBaseline = textBaseline;
+  ctx.fillText('Ура вы победили!', 120, 40);
+  ctx.fillText('Список результатов:', 120, 60);
+};
+
+var renderColumn = function (ctx, name, time, columnHeight, columnX) {
+  ctx.fillText(name, columnX, TEXT_GAP);
+  ctx.fillRect(columnX, CLOUD_HEIGHT - 20, COLUMN_WIDTH, -columnHeight);
+  ctx.fillStyle = '#000';
+  ctx.fillText(Math.round(time), columnX, CLOUD_HEIGHT - columnHeight - 40);
+};
+
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
+  renderText(ctx, '#000', '16px PT Mono', 'hanging');
   var maxTime = getMaxTime(times);
   var columnX = COLUMN_X;
 
@@ -47,10 +58,7 @@ window.renderStatistics = function (ctx, names, times) {
     }
 
     var columnHeight = times[i] * BAR_HEIGHT / maxTime;
-    ctx.fillText(names[i], columnX, TEXT_GAP);
-    ctx.fillRect(columnX, CLOUD_HEIGHT - 20, COLUMN_WIDTH, -columnHeight);
-    ctx.fillStyle = '#000';
-    ctx.fillText(Math.round(times[i]), columnX, CLOUD_HEIGHT - columnHeight - 40);
+    renderColumn(ctx, names[i], times[i], columnHeight, columnX);
     columnX += COLUMN_WIDTH + COLUMN_MARGIN;
   }
 };

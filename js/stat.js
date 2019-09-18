@@ -2,7 +2,7 @@
 
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
-var CLOUD_X = 100;
+var CLOUD_X = 120;
 var CLOUD_Y = 10;
 var GAP = 10;
 var TEXT_GAP = 260;
@@ -44,8 +44,8 @@ var renderColumn = function (ctx, name, time, columnHeight, columnX) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
+  renderCloud(ctx, CLOUD_X - 10, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
+  renderCloud(ctx, CLOUD_X - 20, CLOUD_Y, '#fff');
   renderText(ctx, '#000', '16px PT Mono', 'hanging');
   var maxTime = getMaxTime(times);
   var columnX = COLUMN_X;
